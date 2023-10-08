@@ -5,7 +5,7 @@ import AboutView from "@/pages/AboutView.vue";
 import ContactView from "@/pages/ContactView.vue";
 
 const routes = [
-    { path: '/', component: WelcomeView },
+    { path: '/', component: MainView },
     { path: '/about', component: AboutView },
     { path: '/contact', component: ContactView },
     { path: '/game', component: MainView },
