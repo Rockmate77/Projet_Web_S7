@@ -164,7 +164,7 @@ export default {
     } else {
       // Si le joueur a terminé tous les niveaux, indiquez peut-être un état de victoire.
       this.gameOver = true;
-      // Afficher un message de félicitations ici, si vous le souhaitez.
+      
     }
   },
 
@@ -183,7 +183,6 @@ startLevelTimer(timeForThisLevel) {
     }
     this.timeLeft = timeForThisLevel;
     this.levelTimeInterval = setInterval(() => {
-      // ... (reste du code pour le timer) ...
     }, 1000);
   },
 
