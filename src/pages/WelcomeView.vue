@@ -59,15 +59,16 @@ export default {
       }
     },
     createFile() {
-      const file=JSON.parse('{' +
+      const file = JSON.parse('{' +
           '    "visiteurs": 0,' +
           '    "clickValue": 50,' +
           '    "upgrades": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],' +
           '    "basePrices": [150, 1000, 5000, 30000, 100000, 400000, 2000000, 16666666, 1234567890, 39999999999],' +
-          '    "baseRate": [1, 5, 35, 100, 400, 1000, 4000, 66666, 98765, 9999999],' +
           '    "autoUpgrade": null,' +
-          '    "gameRate": 1.05' +
-          '  }');
+          '    "gameRate": 1.07,' +
+          '    "buttons": [{ "isActive": true, "isBought" : false, "label": "clic 2x" },{ "isActive": true, "isBought" : false, "label": "clic 2x" },{ "isActive": true, "isBought" : false, "label": "clic 3x" },{ "isActive": true, "isBought" : false, "label": "clic 3x" },{ "isActive": true, "isBought" : false, "label": "clic 4x" },{ "isActive": true, "isBought" : false, "label": "clic 4x" },{ "isActive": true, "isBought" : false, "label": "clic 9x" }]' +
+          '}');
+
       sessionStorage.setItem("uploadedFile", JSON.stringify(file));
       console.log("new save file created")
     },

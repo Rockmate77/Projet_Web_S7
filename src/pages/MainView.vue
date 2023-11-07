@@ -4,41 +4,46 @@
       <clickframe  class="center-pane" @click="incrementVisiteur"/>
       <div class="right-pane">
         <br>
-        <div class="scrollable-container">
+        <div class="scrollable-container-1">
           <div>
             <ul class="list-group" style="padding: 5px">
               <li class="clist-group-item">
                 <p style="color: black">💰 Visitors: {{ visiteurs }}</p>
               </li>
+              <!--
+              <li class="clist-group-item">
+                <p style="color: black"> {{ getVisitorInc() }} V/s </p>
+              </li>
+              -->
               <li>
-                <p style="color:black;">Juggler (+{{ getBaseUpgrade(0) }}): <button @click="buyUpgrade(0)">{{ getPrice(0) }}</button></p>
+                <p style="color:black;">{{this.upgrades[0]}} Juggler (+{{ getBaseUpgrade(0) }}V/s): <button @click="buyUpgrade(0)">{{ getPrice(0) }}</button></p>
               </li>
               <li>
-                <p style="color:black;">Clown (+{{ getBaseUpgrade(1) }}): <button @click="buyUpgrade(1)">{{ getPrice(1) }}</button></p>
+                <p style="color:black;">{{this.upgrades[1]}} Clown (+{{ getBaseUpgrade(1) }}V/s): <button @click="buyUpgrade(1)">{{ getPrice(1) }}</button></p>
               </li>
               <li>
-                <p style="color:black;">Magician (+{{ getBaseUpgrade(2) }}): <button @click="buyUpgrade(2)">{{ getPrice(2) }}</button></p>
+                <p style="color:black;">{{this.upgrades[2]}} Magician (+{{ getBaseUpgrade(2) }}V/s): <button @click="buyUpgrade(2)">{{ getPrice(2) }}</button></p>
               </li>
               <li>
-                <p style="color:black;">Lions (+{{ getBaseUpgrade(3) }}): <button @click="buyUpgrade(3)">{{ getPrice(3) }}</button></p>
+                <p style="color:black;">{{this.upgrades[3]}} Lions (+{{ getBaseUpgrade(3) }}V/s): <button @click="buyUpgrade(3)">{{ getPrice(3) }}</button></p>
               </li>
               <li>
-                <p style="color:black;">Acrobats (+{{ getBaseUpgrade(4) }}): <button @click="buyUpgrade(4)">{{ getPrice(4) }}</button></p>
+                <p style="color:black;">{{this.upgrades[4]}} Acrobats (+{{ getBaseUpgrade(4) }}V/s): <button @click="buyUpgrade(4)">{{ getPrice(4) }}</button></p>
               </li>
               <li>
-                <p style="color:black;">Sea Lion (+{{ getBaseUpgrade(5) }}): <button @click="buyUpgrade(5)">{{ getPrice(5) }}</button></p>
+                <p style="color:black;">{{this.upgrades[5]}} Sea Lion (+{{ getBaseUpgrade(5) }}V/s): <button @click="buyUpgrade(5)">{{ getPrice(5) }}</button></p>
               </li>
               <li>
-                <p style="color:black;">Fire Eater (+{{ getBaseUpgrade(6) }}): <button @click="buyUpgrade(6)">{{ getPrice(6)}}</button></p>
+                <p style="color:black;">{{this.upgrades[6]}} Fire Eater (+{{ getBaseUpgrade(6) }}V/s): <button @click="buyUpgrade(6)">{{ getPrice(6)}}</button></p>
               </li>
               <li>
-                <p style="color:black;"> Cannon lady (+{{ getBaseUpgrade(7) }}): <button @click="buyUpgrade(7)">{{ getPrice(7) }}</button></p>
+                <p style="color:black;">{{this.upgrades[7]}} Cannon lady (+{{ getBaseUpgrade(7) }}V/s): <button @click="buyUpgrade(7)">{{ getPrice(7) }}</button></p>
               </li>
               <li>
-                <p style="color:black;"> M. Loyal (+{{ getBaseUpgrade(8) }}): <button @click="buyUpgrade(8)">{{ getPrice(8) }}</button></p>
+                <p style="color:black;">{{this.upgrades[8]}} M. Loyal (+{{ getBaseUpgrade(8) }}V/s): <button @click="buyUpgrade(8)">{{ getPrice(8) }}</button></p>
               </li>
               <li>
-                <p style="color:black;"> Fire circle (+{{ getBaseUpgrade(9) }}): <button @click="buyUpgrade(9)">{{ getPrice(9) }}</button></p>
+                <p style="color:black;">{{this.upgrades[9]}} Fire circle (+{{ getBaseUpgrade(9) }}V/s): <button @click="buyUpgrade(9)">{{ getPrice(9) }}</button></p>
               </li>
             </ul>
           </div>
@@ -46,7 +51,22 @@
       </div>
     </div>
     <div class="bottom-section">
-      <div class="left-bottom-pane">ToDo</div>
+      <div class="left-bottom-pane">
+        <div class="scrollable-container-2">
+          <div class="button-container">
+            <button
+                v-for="(button, index) in buttons"
+                :key="index"
+                :class="{ disabled: !button.isActive }"
+                @click="buyButtonUpgrade(index)"
+            >
+              {{this.buttons[index].label}}
+              <br>
+              {{this.buttons_prices[index]}} V.
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="right-bottom-pane">ToDo</div>
     </div>
   </div>
@@ -63,11 +83,50 @@ export default {
       visiteurs: 0,
       clickValue: 50,
       upgrades: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      basePrices: [150, 1000, 5000, 30000, 100000, 400000, 2000000, 16666666, 1234567890, 39999999999],
-      baseRate: [1, 5, 35, 100, 400, 1000, 4000, 66666, 98765, 9999999],
+      basePrices: [
+        150,
+        1000,
+        5000,
+        30000,
+        100000,
+        400000,
+        2000000,
+        16666666,
+        1234567890,
+        39999999999
+      ],
+      baseRate: [
+        1,
+        5,
+        35,
+        100,
+        400,
+        1000,
+        4000,
+        66666,
+        98765,
+        9999999
+      ],
       autoUpgrade: null,
-      gameRate: 1.05
-
+      gameRate: 1.07,
+      buttons: [
+        { isActive: true, isBought : false, label: "clic 2x" },
+        { isActive: true, isBought : false, label: "clic 2x" },
+        { isActive: true, isBought : false, label: "clic 3x" },
+        { isActive: true, isBought : false, label: "clic 3x" },
+        { isActive: true, isBought : false, label: "clic 4x" },
+        { isActive: true, isBought : false, label: "clic 4x" },
+        { isActive: true, isBought : false, label: "clic 9x" },
+      ],
+      buttons_prices :[
+        100,
+        1000,
+        10000,
+        500000,
+        10000000,
+        500000000,
+        999999999999,
+      ],
     };
   },
   mounted(){
@@ -83,6 +142,7 @@ export default {
         this.clickValue = obj.clickValue
         this.upgrades = obj.upgrades
         this.autoUpgrade = obj.autoUpgrade
+        this.buttons = obj.buttons
 
         this.autoUpgrade = setInterval(() => {
           for (var i = 0; i < 9; i++) {
@@ -95,11 +155,65 @@ export default {
             obj2.clickValue = this.clickValue
             obj2.upgrades = this.upgrades
             obj2.autoUpgrade = this.autoUpgrade
+            obj2.buttons = this.buttons
 
             sessionStorage.setItem("uploadedFile", JSON.stringify(obj2));
             console.log(sessionStorage.getItem("uploadedFile"))
           }
         }, 1000);
+      }
+    },
+
+    buyButton(index){
+      this.buttons[index].isBought=true;
+      this.buttons[index].isActive=false;
+      this.visiteurs-=this.buttons_prices[index];
+    },
+
+    buyButtonUpgrade(index){
+      switch (index){
+        case 0:
+          if((!this.buttons[index].isBought) && this.visiteurs>=this.buttons_prices[index]){
+            this.buyButton(index);
+            this.clickValue=this.clickValue*2;
+          }
+          break
+        case 1:
+          if((!this.buttons[index].isBought) && this.visiteurs>=this.buttons_prices[index]){
+            this.buyButton(index);
+            this.clickValue=this.clickValue*2;
+          }
+          break
+        case 2:
+          if((!this.buttons[index].isBought) && this.visiteurs>=this.buttons_prices[index]){
+            this.buyButton(index);
+            this.clickValue=this.clickValue*3;
+          }
+          break
+        case 3:
+          if((!this.buttons[index].isBought) && this.visiteurs>=this.buttons_prices[index]){
+            this.buyButton(index);
+            this.clickValue=this.clickValue*3;
+          }
+          break
+        case 4:
+          if((!this.buttons[index].isBought) && this.visiteurs>=this.buttons_prices[index]){
+            this.buyButton(index);
+            this.clickValue=this.clickValue*4;
+          }
+          break
+        case 5:
+          if((!this.buttons[index].isBought) && this.visiteurs>=this.buttons_prices[index]){
+            this.buyButton(index);
+            this.clickValue=this.clickValue*4;
+          }
+          break
+        case 6:
+          if((!this.buttons[index].isBought) && this.visiteurs>=this.buttons_prices[index]){
+            this.buyButton(index);
+            this.clickValue=this.clickValue*9;
+          }
+          break
       }
     },
 
@@ -122,6 +236,13 @@ export default {
     getBaseUpgrade(x) {
       return this.baseRate[x];
     },
+    getVisitorInc(){
+      var value=0;
+      for(var i=0;i>this.upgrades.length;i++){
+        value+=(this.baseRate[i]*this.upgrades[i]);
+      }
+      return value;
+    },
     /*
     buyAutoClickerUpgrade() {
       if (this.money >= this.autoClickerUpgradeCost) {
@@ -137,8 +258,9 @@ export default {
     */
   },
   beforeUnmount() {
-    this.autoUpgrade = [null,null,null,null,null,null,null,null,null,null]
-  }
+    this.autoUpgrade = null;
+  },
+
 };
 
 </script>
@@ -149,11 +271,16 @@ export default {
   display: block;
   text-decoration: none;
 }
-.scrollable-container {
+.scrollable-container-1 {
   overflow-y: auto;
   white-space: nowrap; /* Prevent button text from wrapping */
   height: inherit;
   width: min-content;
+}
+.scrollable-container-2 {
+  overflow-y: auto;
+  white-space: nowrap; /* Prevent button text from wrapping */
+  height: inherit;
 }
 
 div {
@@ -210,8 +337,6 @@ div {
   flex-direction: column;
 }
 
-
-
 .bottom-section {
   display: flex;
   height: 40%;
@@ -241,7 +366,20 @@ button {
   transition: background-color 0.2s;
 }
 
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+}
 button:hover {
   background-color: #ff4500;
 }
+.disabled {
+  display: none;
+}
+
 </style>
