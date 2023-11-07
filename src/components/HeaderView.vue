@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     retrieveFile() {
-      const serializedFile = sessionStorage.getItem("uploadedFile");
+      var serializedFile = sessionStorage.getItem("uploadedFile");
       if (serializedFile) {
         this.fileData = JSON.parse(serializedFile);
         console.log("file retrieved")
